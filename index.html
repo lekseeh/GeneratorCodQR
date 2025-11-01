@@ -27,7 +27,6 @@ const desert = [
     {nume: "Inghetata", pret: 8}
 ];
 
-// Functie pentru a alege aleatoriu un element
 function aleator(array) {
     return array[Math.floor(Math.random() * array.length)];
 }
@@ -37,7 +36,6 @@ const fs = aleator(felSecundar);
 const d = aleator(desert);
 const total = fp.pret + fs.pret + d.pret;
 
-// Inlocuire valori in HTML
 document.getElementById("fel_principal").textContent = `Fel principal: ${fp.nume} - ${fp.pret} lei`;
 document.getElementById("fel_secundar").textContent = `Fel secundar: ${fs.nume} - ${fs.pret} lei`;
 document.getElementById("desert").textContent = `Desert: ${d.nume} - ${d.pret} lei`;
