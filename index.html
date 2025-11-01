@@ -7,10 +7,41 @@
 <body>
 <h1>Meniul zilei</h1>
 <ul>
-    <li>Fel principal: {{fel_principal}} - {{pret_principal}} lei</li>
-    <li>Fel secundar: {{fel_secundar}} - {{pret_secundar}} lei</li>
-    <li>Desert: {{desert}} - {{pret_desert}} lei</li>
+    <li id="fel_principal"></li>
+    <li id="fel_secundar"></li>
+    <li id="desert"></li>
 </ul>
-<h2> Total: {{total}} lei</h2>
+<h2 id="total"></h2>
+
+<script>
+const felPrincipal = [
+    {nume: "Ciorba de fasole", pret: 15},
+    {nume: "Supa de pui", pret: 15}
+];
+const felSecundar = [
+    {nume: "Cartofi prajiti cu piept de pui", pret: 21},
+    {nume: "Orez cu legume", pret: 23}
+];
+const desert = [
+    {nume: "Tiramisu", pret: 11},
+    {nume: "Inghetata", pret: 8}
+];
+
+// Functie pentru a alege aleatoriu un element
+function aleator(array) {
+    return array[Math.floor(Math.random() * array.length)];
+}
+
+const fp = aleator(felPrincipal);
+const fs = aleator(felSecundar);
+const d = aleator(desert);
+const total = fp.pret + fs.pret + d.pret;
+
+// Inlocuire valori in HTML
+document.getElementById("fel_principal").textContent = `Fel principal: ${fp.nume} - ${fp.pret} lei`;
+document.getElementById("fel_secundar").textContent = `Fel secundar: ${fs.nume} - ${fs.pret} lei`;
+document.getElementById("desert").textContent = `Desert: ${d.nume} - ${d.pret} lei`;
+document.getElementById("total").textContent = `Total: ${total} lei`;
+</script>
 </body>
 </html>
