@@ -40,4 +40,4 @@ def meniu_aleatoriu():
     fs = random.choice(fel_secundar)
     d = random.choice(desert)
     total = fp.pret + fs.pret + d.pret
-    return fp, fs, d, total
+    return fp, fs, d, fp.pret, fs.pret, d.pret, total
