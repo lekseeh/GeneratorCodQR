@@ -13,7 +13,7 @@ html_content = (
     .replace("{{fel_secundar}}", fs.nume)
     .replace("{{pret_secundar}}", str(fs.pret))
     .replace("{{desert}}", d.nume)
-    .replace("{{pre_desert}}", str(d.pret))
+    .replace("{{pret_desert}}", str(d.pret))
     .replace("{{total}}", str(total))
 )
 
