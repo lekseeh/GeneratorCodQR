@@ -1,26 +1,49 @@
 import qrcode
 import os
+from datetime import datetime
 from meniu import meniu_aleatoriu
 
+from http.server import SimpleHTTPRequestHandler, HTTPServer
+
+#/////////////////////////////////////
+import http.server
+import socketserver
+
+timestamp = datetime.now()
+PORT = 8000 + (timestamp.hour * 100 + timestamp.minute) % 2000
+
+Handler = http.server.SimpleHTTPRequestHandler
+
+
+
 fp,fs,d,total=meniu_aleatoriu()
+timp_actual = datetime.now().strftime("%Y%m%d_%H%M%S")
+filename = f"page_{timp_actual}.html"
 
-with open("index.html", "r", encoding="utf-8") as f:
-    html_content = f.read()
-html_content = (
-    html_content
-    .replace("{{fel_principal}}", fp.nume)
-    .replace("{{pret_principal}}", str(fp.pret))
-    .replace("{{fel_secundar}}", fs.nume)
-    .replace("{{pret_secundar}}", str(fs.pret))
-    .replace("{{desert}}", d.nume)
-    .replace("{{pret_desert}}", str(d.pret))
-    .replace("{{total}}", str(total))
-)
+html_content = f"""
 
-with open("index.html", "w", encoding="utf-8") as f:
+
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Meniul zilei</title>
+</head>
+<body>
+<h1>Meniul zilei</h1>
+<ul>
+    <li>Fel principal: {fp.nume} - {str(fp.pret)} lei</li>
+    <li>Fel secundar: {fs.nume} - {str(fs.pret)} lei</li>
+    <li>Desert: {d.nume} - {str(d.pret)} lei</li>
+</ul>
+<h2> Total: {str(total)} lei</h2>
+</body>
+</html>
+"""
+
+with open(f"page_{timp_actual}.html", "w") as f:
     f.write(html_content)
 
-file_path = os.path.abspath("index.html")
 
 qr = qrcode.QRCode(
     version=8,
@@ -28,9 +51,15 @@ qr = qrcode.QRCode(
     box_size=10,
     border=4
 )
-qr.add_data('https://lekseeh.github.io/GeneratorCodQR/')
-qr.make()
+qr.add_data(f'http://localhost:{PORT}')
+qr.make(fit=True)
+timp = datetime.now().strftime("%S%M%H")
+nume = f'timp{timp}.png'
+print(nume)
 img = qr.make_image(fill_color="black", back_color="white")
-img.save('qrcode_meniu.png')
+img.save(nume)
 
 print("Scaneaza pentru a vedea meniul:")
+with socketserver.TCPServer(("", PORT), Handler) as httpd:
+    print(f"Local host http://localhost:{PORT}")
+    httpd.serve_forever()
