@@ -9,8 +9,7 @@ class Meniu:
 
 class FelPrincipal(Meniu):
     pass
-#lalalalalalala
-#lalallaal
+#buna siua
 
 class FelSecundar(Meniu):
     pass
