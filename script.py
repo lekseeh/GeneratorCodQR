@@ -89,7 +89,7 @@ def generate_menu(
     qr = qrcode.QRCode(version=1, box_size=10, border=4)
     qr.add_data(qr_link)
     qr.make(fit=True)
-    img = qr.make_image(fill_color="#ed0e54", back_color="#ebbecc")
+    img = qr.make_image(fill_color="#ed0e54", back_color="white")
 
     # Convertim imaginea în base64 pentru a o afișa direct în HTML fără a o salva pe disc
     buffered = BytesIO()
